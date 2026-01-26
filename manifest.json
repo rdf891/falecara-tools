@@ -1,0 +1,21 @@
+{
+  "name": "FaleCara Tools",
+  "short_name": "FaleCara",
+  "description": "Hub de ferramentas trabalhistas e notícias.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#1d3557",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/192x192.png?text=FC",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512.png?text=FC",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

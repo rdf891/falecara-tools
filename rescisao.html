@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Rescisão - FaleCara</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Legacy Scripts for PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar-container">
+            <button class="hamburger-menu" id="navToggle"><i class="fas fa-bars"></i></button>
+            <h1><i class="fas fa-balance-scale"></i> FaleCara Tools</h1>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="salario-liquido.html">Salário Líquido</a></li>
+                    <li><a href="rescisao.html" class="active">Simulador Rescisão</a></li>
+                    <li><a href="seguro-desemprego.html">Seguro Desemprego</a></li>
+                    <li><a href="custo-funcionario.html">Custo Funcionário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="rescisao-calculadora-container">
+            <div class="rescisao-calculadora">
+                <h2>Simulador de Rescisão <span class="badge-2026">2026</span></h2>
+
+                <div class="checkbox-container">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="semRegistro">
+                        <label for="semRegistro">Trabalho sem Registro (Informal)?</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="contratoIntermitente">
+                        <label for="contratoIntermitente">Contrato Intermitente?</label>
+                        <span class="tooltip-icon">? <span class="tooltip-text">Modalidade onde o trabalho ocorre apenas
+                                quando convocado. Férias e 13º são pagos mensalmente, não na rescisão.</span></span>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <h3>1. Dados do Contrato</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="tipoSaida">Motivo da Rescisão</label>
+                            <select id="tipoSaida">
+                                <option value="sem_justa_causa">Demissão sem Justa Causa</option>
+                                <option value="pedido_demissao">Pedido de Demissão</option>
+                                <option value="justa_causa">Demissão por Justa Causa</option>
+                                <option value="acordo">Acordo Comum (Reforma Trab.)</option>
+                                <option value="termino_contrato">Término de Contrato (Prazo Det.)</option>
+                                <option value="termino_exp_empregador">Término Exp. (Empregador)</option>
+                                <option value="termino_exp_empregado">Término Exp. (Empregado)</option>
+                                <option value="falecimento">Falecimento</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="dataAdmissao">Data de Admissão</label>
+                            <input type="date" id="dataAdmissao">
+                        </div>
+                        <div class="form-group">
+                            <label for="dataSaida">Data de Saída (Afastamento)</label>
+                            <input type="date" id="dataSaida">
+                        </div>
+                        <div class="form-group">
+                            <label for="avisoPrevio">Aviso Prévio</label>
+                            <select id="avisoPrevio">
+                                <option value="trabalhado">Trabalhado</option>
+                                <option value="indenizado">Indenizado</option>
+                                <option value="nao_cumprido">Não Cumprido (Descontado)</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="group-exp-duracao" style="display:none;">
+                            <label for="duracaoContratoExp">Duração Contrato (Dias)</label>
+                            <input type="number" id="duracaoContratoExp" value="90">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <h3>2. Remuneração e Benefícios</h3>
+
+                    <div class="checkbox-group mb-25" id="group-jovem-aprendiz">
+                        <input type="checkbox" id="jovemAprendiz">
+                        <label for="jovemAprendiz">É Jovem Aprendiz?</label>
+                    </div>
+
+                    <div class="alert-intermitente" id="aviso-intermitente-texto">
+                        <strong>Atenção:</strong> Férias e 13º proporcionais são pagos a cada convocação e serão zerados
+                        aqui. <br>
+                        <strong>Importante:</strong> Preencha o campo "Saldo de Salário do Último Serviço" com o valor
+                        total que você tem a receber pelos dias/horas trabalhados nesta última convocação.
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="salarioBruto" id="labelSalarioBruto">Salário Fixo (R$) <span
+                                    class="tooltip-icon">? <span class="tooltip-text">Salário base em carteira. Para
+                                        Intermitente, use a média dos últimos 12 meses.</span></span></label>
+                            <input type="text" class="money" id="salarioBruto" placeholder="1.621,00">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dependentes">Nº Dependentes</label>
+                            <input type="number" id="dependentes" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="feriasVencidas">Férias Vencidas (Períodos)</label>
+                            <input type="number" id="feriasVencidas" value="0" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaVariaveisFerias">Média Variáveis (Férias) R$</label>
+                            <input type="text" class="money" id="mediaVariaveisFerias" placeholder="0,00">
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaVariaveis13">Média Variáveis (13º) R$</label>
+                            <input type="text" class="money" id="mediaVariaveis13" placeholder="0,00">
+                        </div>
+                        <div class="form-group">
+                            <label for="variaveisMesRescisao" id="labelVariaveisMes">Variáveis Mês da Rescisão
+                                R$</label>
+                            <input type="text" class="money" id="variaveisMesRescisao" placeholder="0,00">
+                        </div>
+
+                        <div class="checkbox-group mt-25">
+                            <input type="checkbox" id="descontoVT">
+                            <label for="descontoVT">Descontar Vale-Transporte (6%)</label>
+                        </div>
+                    </div>
+
+                    <div class="dashed-border-top mt-25 pt-15">
+                        <h4 class="color-accent">Descontos e Adiantamentos</h4>
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="adiantamento13">Adiantamento 13º Salário (R$) <span class="tooltip-icon">?
+                                        <span class="tooltip-text">Valor da 1ª parcela se já foi recebida. Será
+                                            descontado do total a receber.</span></span></label>
+                                <input type="text" class="money" id="adiantamento13" placeholder="0,00">
+                            </div>
+                            <div class="form-group">
+                                <label for="outrosDescontos">Outros Descontos/Vales (R$) <span class="tooltip-icon">?
+                                        <span class="tooltip-text">Vales salariais (adiantamento quinzenal) ou faltas
+                                            injustificadas.</span></span></label>
+                                <input type="text" class="money" id="outrosDescontos" placeholder="0,00">
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="input-group" id="group-fgts">
+                    <h3>3. Saldo do FGTS</h3>
+                    <div class="checkbox-group mb-25">
+                        <input type="checkbox" id="estimarFgts">
+                        <label for="estimarFgts">Estimar saldo (Não sei o valor exato)</label>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group" id="saldo-manual-group">
+                            <label for="saldoFgts">Saldo FGTS (Extrato)</label>
+                            <input type="text" class="money" id="saldoFgts" placeholder="5.000,00">
+                        </div>
+                        <div class="form-group" id="saldo-estimado-group" style="display:none;">
+                            <label for="salarioMedioFgts">Salário Médio (para estimativa)</label>
+                            <input type="text" class="money" id="salarioMedioFgts" placeholder="0,00">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <button class="btn-calcular" id="calcularBtn">CALCULAR RESCISÃO 2026</button>
+                </div>
+
+                <div id="printable-area" class="bg-white">
+                    <div class="pdf-header text-center p-20 border-b-2 border-ccc hidden">
+                        <h2 class="m-0 border-none color-primary">Simulação de Verbas Rescisórias (2026)</h2>
+                    </div>
+                    <div class="resultado-rescisao hidden" id="resultado">
+                        <table>
+                            <tbody id="resultado-tabela"></tbody>
+                        </table>
+                        <div class="memoria-calculo-wrapper hidden" id="memoria-calculo-wrapper">
+                            <div class="memoria-calculo" id="memoria-calculo"></div>
+                        </div>
+                    </div>
+                    <div class="pdf-footer text-center p-15 border-t-1 border-eee text-sm text-gray-500 hidden">
+                        <p class="m-0">Gerado por Fale Cara - falecara.blogspot.com</p>
+                    </div>
+                </div>
+
+                <button class="btn-pdf" id="btn-pdf">Baixar Simulação em PDF</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FaleCara Tools. Todos os direitos reservados.</p>
+        <p>Desenvolvido para simplificar a vida do trabalhador e do empreendedor.</p>
+    </footer>
+
+    <script src="js/simulador-rescisao.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

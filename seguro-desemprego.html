@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Seguro-Desemprego 2026 - FaleCara</title>
+    <meta name="description"
+        content="Simule o cálculo do Seguro Desemprego 2026. Saiba quantas parcelas você tem direito e o valor estimado do benefício.">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar-container">
+            <button class="hamburger-menu" id="navToggle"><i class="fas fa-bars"></i></button>
+            <h1><i class="fas fa-balance-scale"></i> FaleCara Tools</h1>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="salario-liquido.html">Salário Líquido</a></li>
+                    <li><a href="rescisao.html">Simulador Rescisão</a></li>
+                    <li><a href="seguro-desemprego.html" class="active">Seguro Desemprego</a></li>
+                    <li><a href="custo-funcionario.html">Custo Funcionário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="seguro-calculadora-container">
+            <div class="seguro-calculadora">
+                <h2>Simulador Seguro-Desemprego <span class="badge-ano">2026</span></h2>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="salario1">Último Salário (R$)</label>
+                        <input type="number" id="salario1" placeholder="Ex: 2500.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="salario2">Penúltimo Salário (R$)</label>
+                        <input type="number" id="salario2" placeholder="Ex: 2500.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="salario3">Antepenúltimo Salário (R$)</label>
+                        <input type="number" id="salario3" placeholder="Ex: 2500.00">
+                    </div>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="mesesTrabalhados">Meses trabalhados (nos últimos 36m)</label>
+                        <input type="number" id="mesesTrabalhados" placeholder="Ex: 12">
+                    </div>
+                    <div class="form-group">
+                        <label for="solicitacaoAnterior">É a primeira vez que pede o seguro?</label>
+                        <select id="solicitacaoAnterior">
+                            <option value="primeira" selected>Sim, é a 1ª vez</option>
+                            <option value="segunda">Não, é a 2ª vez</option>
+                            <option value="terceira">Não, é a 3ª vez ou mais</option>
+                        </select>
+                    </div>
+                </div>
+
+                <button class="btn-calcular" id="calcularBtn">Calcular Seguro-Desemprego</button>
+
+                <div class="resultado-seguro" id="resultado" style="display: none;">
+                    <h3 id="resultado-titulo"></h3>
+                    <p id="resultado-texto"></p>
+                    <p class="disclaimer">Este é um valor estimado com base nas tabelas projetadas para 2026. O cálculo
+                        oficial é realizado pelo Governo Federal.</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <h3>Regras do Benefício (Vigência 2026)</h3>
+                <p>O cálculo utiliza a média dos 3 últimos salários anteriores à demissão.</p>
+
+                <h4>Quantidade de Parcelas</h4>
+                <ul>
+                    <li><strong>1ª solicitação:</strong> 4 parcelas (12 a 23 meses de trabalho) ou 5 parcelas (24 meses
+                        ou mais).</li>
+                    <li><strong>2ª solicitação:</strong> 3 parcelas (9 a 11 meses), 4 parcelas (12 a 23 meses) ou 5
+                        parcelas (24 meses ou mais).</li>
+                    <li><strong>3ª solicitação em diante:</strong> 3 parcelas (6 a 11 meses), 4 parcelas (12 a 23 meses)
+                        ou 5 parcelas (24 meses ou mais).</li>
+                </ul>
+                <h4>Valor da Parcela (Tabela 2026)</h4>
+                <ul>
+                    <li><strong>Média até R$ 2.180,00:</strong> Multiplica-se a média por 0,8 (80%).</li>
+                    <li><strong>Média entre R$ 2.180,01 e R$ 3.633,00:</strong> O que exceder a 2.180,00 multiplica-se
+                        por 0,5 (50%) e soma-se a R$ 1.744,00.</li>
+                    <li><strong>Média acima de R$ 3.633,00:</strong> O valor será fixo no teto de <strong>R$
+                            2.470,60</strong>.</li>
+                </ul>
+                <p><strong>Importante:</strong> Nenhuma parcela pode ser inferior ao Salário Mínimo de <strong>R$
+                        1.621,00</strong>.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FaleCara Tools. Todos os direitos reservados.</p>
+        <p>Desenvolvido para simplificar a vida do trabalhador e do empreendedor.</p>
+    </footer>
+
+    <script src="js/seguro-desemprego.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

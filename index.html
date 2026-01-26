@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub de Ferramentas - FaleCara Tools</title>
+    <meta name="description"
+        content="FaleCara Tools: Hub central de calculadoras trabalhistas gratuitas. Salário Líquido 2026, Rescisão, Seguro Desemprego e Custo de Funcionário.">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+            text-align: center;
+            flex: 1;
+        }
+
+        .dashboard-header {
+            margin-bottom: 50px;
+        }
+
+        .dashboard-header h2 {
+            font-size: 2.5em;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            font-size: 1.2em;
+            color: #666;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 30px;
+        }
+
+        .tool-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 1px solid transparent;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border-color: var(--secondary-color);
+        }
+
+        .tool-icon {
+            font-size: 3em;
+            color: var(--secondary-color);
+            margin-bottom: 20px;
+        }
+
+        .tool-title {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+
+        .tool-desc {
+            font-size: 0.9em;
+            color: #777;
+            line-height: 1.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar-container">
+            <button class="hamburger-menu" id="navToggle"><i class="fas fa-bars"></i></button>
+            <h1><i class="fas fa-balance-scale"></i> FaleCara Tools</h1>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="salario-liquido.html">Salário Líquido</a></li>
+                    <li><a href="rescisao.html">Simulador Rescisão</a></li>
+                    <li><a href="seguro-desemprego.html">Seguro Desemprego</a></li>
+                    <li><a href="custo-funcionario.html">Custo Funcionário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="dashboard-container">
+            <div class="dashboard-header">
+                <h2>Bem-vindo ao FaleCara Tools</h2>
+                <p>Ferramentas Trabalhistas Simplificadas para Você</p>
+            </div>
+
+            <div class="tools-grid">
+                <a href="salario-liquido.html" class="tool-card">
+                    <i class="fas fa-money-bill-wave tool-icon"></i>
+                    <div class="tool-title">Salário Líquido 2026</div>
+                    <div class="tool-desc">Calcule descontos (INSS, IRRF) e descubra quanto cairá na conta.</div>
+                </a>
+
+                <a href="rescisao.html" class="tool-card">
+                    <i class="fas fa-user-times tool-icon" style="color: #e63946;"></i>
+                    <div class="tool-title">Simulador de Rescisão</div>
+                    <div class="tool-desc">Estime suas verbas rescisórias, FGTS e multas com precisão.</div>
+                </a>
+
+                <a href="seguro-desemprego.html" class="tool-card">
+                    <i class="fas fa-hands-helping tool-icon" style="color: #457b9d;"></i>
+                    <div class="tool-title">Seguro Desemprego</div>
+                    <div class="tool-desc">Saiba quantas parcelas e o valor do benefício em 2026.</div>
+                </a>
+
+                <a href="custo-funcionario.html" class="tool-card">
+                    <i class="fas fa-briefcase tool-icon" style="color: #2a9d8f;"></i>
+                    <div class="tool-title">Custo Funcionário</div>
+                    <div class="tool-desc">Planeje contratações calculando todos os custos para a empresa.</div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FaleCara Tools. Todos os direitos reservados.</p>
+        <p>Desenvolvido para simplificar a vida do trabalhador e do empreendedor.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Custo de Funcionário 2026 - FaleCara</title>
+    <meta name="description"
+        content="Saiba quanto custa um funcionário ou pró-labore para sua empresa. Cálculo automático de encargos, FGTS e provisões (Férias/13º).">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header>
+        <div class="navbar-container">
+            <button class="hamburger-menu" id="navToggle"><i class="fas fa-bars"></i></button>
+            <h1><i class="fas fa-balance-scale"></i> FaleCara Tools</h1>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="salario-liquido.html">Salário Líquido</a></li>
+                    <li><a href="rescisao.html">Simulador Rescisão</a></li>
+                    <li><a href="seguro-desemprego.html">Seguro Desemprego</a></li>
+                    <li><a href="custo-funcionario.html" class="active">Custo Funcionário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="main-container">
+            <div class="calculadora-container">
+                <h2>Calculadora de Custo 2026 <span class="badge-novo">Atualizada</span></h2>
+
+                <div class="calculadora-form">
+
+                    <div class="form-group">
+                        <label>Tipo de Cálculo</label>
+                        <div class="options-group">
+                            <div>
+                                <input type="radio" id="tipoFuncionario" name="tipo_vinculo" value="funcionario"
+                                    checked>
+                                <label for="tipoFuncionario">Funcionário (CLT)</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="tipoProlabore" name="tipo_vinculo" value="prolabore">
+                                <label for="tipoProlabore">Sócio (Pró-labore)</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="valorBruto" id="label-valor-bruto">Salário Bruto do Empregado (R$)</label>
+                        <input type="text" id="valorBruto" class="money" placeholder="Ex: 2500,00">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Regime Tributário da Empresa</label>
+                        <div class="options-group">
+                            <div>
+                                <input type="radio" id="simples" name="regime" value="simples" checked>
+                                <label for="simples">Simples Nacional</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="lucro" name="regime" value="lucro">
+                                <label for="lucro">Lucro Presumido / Real</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" id="opcoes-funcionario">
+                        <label>Opções Adicionais para Funcionário (CLT)</label>
+                        <div class="options-group" style="justify-content: flex-start;">
+                            <div>
+                                <input type="checkbox" id="incluirRescisao">
+                                <label for="incluirRescisao">Provisionar Multa de Demissão?</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn-calcular" id="calcularBtn">Calcular Custo 2026</button>
+                </div>
+
+                <div class="resultado-custo" id="resultado" style="display: none;">
+                    <h3><i class="fas fa-building"></i> Custo para a Empresa</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Descrição</th>
+                                <th>Valor Mensal</th>
+                            </tr>
+                        </thead>
+                        <tbody id="resultado-tabela-empresa">
+                        </tbody>
+                    </table>
+                    <div id="container-liquido" class="resultado-liquido" style="display:none;">
+                        <h3><i class="fas fa-user-check"></i> Estimativa para o Funcionário (2026)</h3>
+                        <p style="font-size: 0.9em; color: #666; margin-bottom: 10px;">Aplicando novas tabelas de INSS e
+                            isenção de IR até R$ 5.000.</p>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Descrição</th>
+                                    <th>Valor</th>
+                                </tr>
+                            </thead>
+                            <tbody id="resultado-tabela-funcionario">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="texto-explicativo">
+                <h3>Entenda as Mudanças de 2026</h3>
+                <ul>
+                    <li><strong>Nova Isenção de IRRF:</strong> A grande novidade de 2026 é a isenção de Imposto de Renda
+                        para quem ganha até <strong>R$ 5.000,00</strong>. Nossa calculadora já considera essa regra.
+                    </li>
+                    <li><strong>Tabela INSS 2026:</strong> O cálculo utiliza o novo salário mínimo (R$ 1.621,00) e o
+                        novo teto (R$ 8.475,55) com as alíquotas progressivas atualizadas.</li>
+                    <li><strong>Custo Empresa vs. Desconto Funcionário:</strong> Note que o INSS e IRRF são descontados
+                        do funcionário, não sendo um custo "extra" para a empresa (a empresa apenas repassa). O custo da
+                        empresa é composto pelo Salário Bruto + FGTS + Provisões de Férias/13º + Encargos Patronais (se
+                        não for Simples Nacional).</li>
+                    <li><strong>Salário Família:</strong> Benefício pago pelo INSS (via empresa) para quem tem baixa
+                        renda. Não gera custo para a empresa, pois é deduzido da guia de pagamento.</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FaleCara Tools. Todos os direitos reservados.</p>
+        <p>Desenvolvido para simplificar a vida do trabalhador e do empreendedor.</p>
+    </footer>
+
+    <script src="js/custo-funcionario.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

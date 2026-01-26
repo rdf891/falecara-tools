@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Salário Líquido 2026 - FaleCara</title>
+    <meta name="description"
+        content="Calcule seu Salário Líquido 2026 com base nas novas tabelas de INSS e IRRF. Descubra seus descontos e quanto receberá na conta.">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header>
+        <div class="navbar-container">
+            <button class="hamburger-menu" id="navToggle"><i class="fas fa-bars"></i></button>
+            <h1><i class="fas fa-balance-scale"></i> FaleCara Tools</h1>
+
+            <nav>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="salario-liquido.html" class="active">Salário Líquido</a></li>
+                    <li><a href="rescisao.html">Simulador Rescisão</a></li>
+                    <li><a href="seguro-desemprego.html">Seguro Desemprego</a></li>
+                    <li><a href="custo-funcionario.html">Custo Funcionário</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="salario-calculadora-container">
+            <div class="salario-calculadora">
+                <h2>Calculadora de Salário Líquido <span class="badge-ano">2026</span></h2>
+
+                <div class="form-grid">
+                    <div class="form-group"><label for="salarioBruto">Salário Bruto Mensal (R$)</label><input
+                            type="text" class="money" id="salarioBruto" placeholder="3.000,00"></div>
+                    <div class="form-group"><label for="outrasVariaveis">Outras Verbas (R$)</label><input type="text"
+                            class="money" id="outrasVariaveis" placeholder="Comissões, H.E., Adic. Noturno, etc."></div>
+                    <div class="form-group"><label for="dependentes">Nº de Dependentes</label><input type="number"
+                            id="dependentes" value="0" min="0"></div>
+                    <div class="form-group"><label for="diasTrabalhados">Dias Trabalhados no Mês</label><input
+                            type="number" id="diasTrabalhados" value="30" max="31" min="1"></div>
+                </div>
+                <div class="form-grid" style="grid-template-columns: 1fr;">
+                    <div class="form-group checkbox-group" style="padding-top: 0;">
+                        <input type="checkbox" id="descontoVT">
+                        <label for="descontoVT">Descontar Vale-Transporte (6%)</label>
+                    </div>
+                    <div class="form-group checkbox-group" style="padding-top: 0;">
+                        <input type="checkbox" id="checkCalcularVariaveis">
+                        <label for="checkCalcularVariaveis">Precisa de ajuda para calcular as verbas variáveis (H.E.,
+                            Adic. Noturno, Comissões)?</label>
+                    </div>
+                </div>
+
+                <div class="sub-calculadora" id="sub-calculadora-variaveis" style="display: none;">
+                    <h4>Cálculo Detalhado de Verbas Variáveis</h4>
+                    <div class="form-grid">
+                        <div class="form-group"><label for="cargaHoraria">Carga Horária Mensal <span
+                                    class="tooltip-icon">? <span class="tooltip-text">É o total de horas que você deve
+                                        trabalhar no mês, conforme seu contrato. O padrão é 220 horas para 44 horas
+                                        semanais.</span></span></label><input type="number" id="cargaHoraria"
+                                value="220"></div>
+                        <div class="form-group"><label for="mesReferencia">Mês do Cálculo <span class="tooltip-icon">?
+                                    <span class="tooltip-text">Selecione o mês e o ano em que as horas extras/comissões
+                                        foram feitas. Isso é essencial para calcular o DSR
+                                        corretamente.</span></span></label><input type="month" id="mesReferencia"></div>
+                        <div class="form-group"><label for="he50">Horas Extras 50% (qtd) <span class="tooltip-icon">?
+                                    <span class="tooltip-text">Quantidade de horas extras feitas em dias de semana ou
+                                        sábados, que valem 50% a mais que a hora normal.</span></span></label><input
+                                type="number" id="he50" placeholder="0"></div>
+                        <div class="form-group"><label for="he100">Horas Extras 100% (qtd) <span class="tooltip-icon">?
+                                    <span class="tooltip-text">Quantidade de horas extras feitas em domingos e feriados,
+                                        que valem o dobro (100% a mais) da hora normal.</span></span></label><input
+                                type="number" id="he100" placeholder="0"></div>
+                        <div class="form-group"><label for="adn">Adicional Noturno 20% (horas) <span
+                                    class="tooltip-icon">? <span class="tooltip-text">Quantidade de horas trabalhadas no
+                                        período noturno (geralmente das 22h às 5h), que têm um acréscimo de
+                                        20%.</span></span></label><input type="number" id="adn" placeholder="0"></div>
+                        <div class="form-group"><label for="comissoes">Comissões (R$)</label><input type="text"
+                                class="money" id="comissoes" placeholder="0,00"></div>
+                    </div>
+                    <button class="btn-calcular sub" id="btnCalcularVariaveis">1. Calcular Total das Variáveis +
+                        DSR</button>
+                    <div class="resultado-variaveis" id="resultadoVariaveis" style="display: none;"></div>
+                    <p class="text-sm text-center mt-15">Após calcular, o valor total (com
+                        DSR) será preenchido automaticamente no campo "Outras Verbas" acima.</p>
+                </div>
+
+                <div class="form-group full-width">
+                    <button class="btn-calcular" id="calcularBtn">2. Calcular Salário Líquido 2026</button>
+                </div>
+
+                <div class="resultado-salario" id="resultado" style="display: none;">
+
+                    <table>
+                        <tbody id="resultado-tabela"></tbody>
+                    </table>
+                    <div class="memoria-calculo" id="memoria-calculo"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 FaleCara Tools. Todos os direitos reservados.</p>
+        <p>Desenvolvido para simplificar a vida do trabalhador e do empreendedor.</p>
+    </footer>
+
+    <script src="js/calculadora-salario.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>
