@@ -115,6 +115,19 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
     const salarioProporcional = (salarioContratual / 30) * diasTrabalhados;
     const remuneracaoBrutaTotal = salarioProporcional + outrasVariaveis;
 
+    // --- GA4 TRACKING ---
+    if (typeof gtag === 'function') {
+        let faixa = 'Acima 5k';
+        if (remuneracaoBrutaTotal <= 2000) faixa = 'Até 2k';
+        else if (remuneracaoBrutaTotal <= 3000) faixa = '2k-3k';
+        else if (remuneracaoBrutaTotal <= 5000) faixa = '3k-5k';
+
+        gtag('event', 'calcular_salario', {
+            'faixa_salarial': faixa,
+            'tem_dependentes': numDependentes > 0 ? 'Sim' : 'Não'
+        });
+    }
+
     // 1. Salário Família 2026
     let salarioFamilia = 0;
     if (remuneracaoBrutaTotal <= TETO_SALARIO_FAMILIA) {

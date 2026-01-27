@@ -12,6 +12,14 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
         alert('Por favor, informe os meses trabalhados.');
         return;
     }
+
+    // --- GA4 TRACKING ---
+    if (typeof gtag === 'function') {
+        gtag('event', 'calcular_seguro', {
+            'vez_solicitacao': tipoSolicitacao,
+            'meses_trabalhados': mesesTrabalhados
+        });
+    }
     // Determinar Parcelas
     let numeroParcelas = 0;
     if (tipoSolicitacao === 'primeira') {

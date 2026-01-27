@@ -114,6 +114,14 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
         return;
     }
 
+    // --- GA4 TRACKING ---
+    if (typeof gtag === 'function') {
+        gtag('event', 'calcular_custo', {
+            'regime_tributario': regime,
+            'tipo_vinculo': tipoVinculo
+        });
+    }
+
     // 1. CÁLCULO CUSTO EMPRESA
     let htmlEmpresa = ``;
     let custoTotalEmpresa = 0;

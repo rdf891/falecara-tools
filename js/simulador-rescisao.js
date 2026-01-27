@@ -222,6 +222,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const diasTotaisContrato = Math.round(Math.abs((dataSaida - dataAdmissao) / umDia)) + 1;
             const anosCompletos = Math.floor(diasTotaisContrato / 365.25);
 
+            // --- GA4 TRACKING ---
+            if (typeof gtag === 'function') {
+                gtag('event', 'calcular_rescisao', {
+                    'motivo_saida': tipoSaida,
+                    'aviso_previo': tipoAviso,
+                    'tempo_casa': anosCompletos,
+                    'sem_registro': isSemRegistro ? 'Sim' : 'Não'
+                });
+            }
+
             const remuneracaoBaseFerias = salarioFixo + mediaVariaveisFerias;
             const remuneracaoBase13 = salarioFixo + mediaVariaveis13;
 
