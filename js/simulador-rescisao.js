@@ -497,7 +497,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 btnPdf.parentNode.replaceChild(newBtnPdf, btnPdf);
 
                 newBtnPdf.addEventListener('click', () => {
-                    gerarPDF('rescisao', dadosPDF);
+                    try {
+                        gerarPDF('rescisao', dadosPDF);
+                    } catch (err) {
+                        console.error('Erro ao gerar PDF da rescisão:', err);
+                        alert('Ocorreu um erro ao gerar o PDF. Verifique o console.');
+                    }
                 });
             }
         });
