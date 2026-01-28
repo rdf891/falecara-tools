@@ -913,3 +913,60 @@ footer a:hover {
 .btn-whatsapp:hover {
     background-color: #128C7E;
 }
+
+/* Banner de Cookies LGPD */
+.cookie-banner {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #222;
+    color: white;
+    padding: 15px 20px;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+.cookie-banner p {
+    margin: 0;
+    font-size: 0.95em;
+    line-height: 1.4;
+}
+
+.cookie-banner a {
+    color: #4db6ac;
+    text-decoration: underline;
+}
+
+.cookie-banner button {
+    background-color: #25D366;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 5px;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+}
+
+.cookie-banner button:hover {
+    background-color: #128C7E;
+}
+
+@media (max-width: 600px) {
+    .cookie-banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    .cookie-banner button {
+        width: 100%;
+    }
+}

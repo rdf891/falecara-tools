@@ -49,13 +49,36 @@ function compartilharZap(mensagemBase) {
             title: 'FaleCara Tools',
             text: textoFinal
         })
-        .catch((error) => {
-            console.log('Compartilhamento nativo falhou, usando fallback:', error);
-            // SE FALHAR (ex: permissão negada), ABRE O LINK NA MARRA
-            window.open(linkZap, '_blank');
-        });
+            .catch((error) => {
+                console.log('Compartilhamento nativo falhou, usando fallback:', error);
+                // SE FALHAR (ex: permissão negada), ABRE O LINK NA MARRA
+                window.open(linkZap, '_blank');
+            });
     } else {
         // 4. Se for PC, abre direto
         window.open(linkZap, '_blank');
     }
+}
+
+function initCookieConsent() {
+    if (!localStorage.getItem('cookieConsent')) {
+        const banner = document.createElement('div');
+        banner.className = 'cookie-banner';
+        banner.innerHTML = `
+            <p>Utilizamos cookies para oferecer a melhor experiência. Ao continuar, você concorda com nossa <a href="politica-privacidade.html">Política de Privacidade</a>.</p>
+            <button id="acceptCookies">Aceitar</button>
+        `;
+        document.body.appendChild(banner);
+
+        document.getElementById('acceptCookies').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'true');
+            banner.remove();
+        });
+    }
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCookieConsent);
+} else {
+    initCookieConsent();
 }
