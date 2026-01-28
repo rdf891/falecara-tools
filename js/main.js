@@ -36,18 +36,26 @@ function compartilharZap(mensagemBase) {
     const urlSite = 'https://rdf891.github.io/falecara-tools/';
     const textoFinal = `${mensagemBase} ${urlSite}`;
 
-    // Detecção simples de dispositivo móvel
+    // 1. Cria o link ANTES de tudo (para garantir que existe)
+    // Usa api.whatsapp.com que é universal
+    const linkZap = `https://api.whatsapp.com/send?text=${encodeURIComponent(textoFinal)}`;
+
+    // 2. Detecção de Mobile
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
+    // 3. Tenta o nativo APENAS se for mobile E suportado
     if (isMobile && navigator.share) {
-        // Nativo apenas no mobile
         navigator.share({
             title: 'FaleCara Tools',
             text: textoFinal
-        }).catch(err => console.log('Erro ao compartilhar ou cancelado:', err));
+        })
+        .catch((error) => {
+            console.log('Compartilhamento nativo falhou, usando fallback:', error);
+            // SE FALHAR (ex: permissão negada), ABRE O LINK NA MARRA
+            window.open(linkZap, '_blank');
+        });
     } else {
-        // Desktop ou fallback -> WhatsApp Web
-        const linkZap = `https://api.whatsapp.com/send?text=${encodeURIComponent(textoFinal)}`;
+        // 4. Se for PC, abre direto
         window.open(linkZap, '_blank');
     }
 }
