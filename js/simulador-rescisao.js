@@ -498,6 +498,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 newBtnPdf.addEventListener('click', () => {
                     try {
+                        const dadosPDF = [];
+                        // Captura linhas da tabela de Resultado
+                        const rows = document.querySelectorAll('#resultado-tabela tr');
+
+                        rows.forEach(row => {
+                            const cells = row.querySelectorAll('td');
+                            // Captura apenas linhas com Descrição e Valor (ignora colspans de headers)
+                            if (cells.length === 2) {
+                                let val = cells[1].innerText.trim();
+                                // Correção: Se o valor estiver vazio ou for apenas label, ignora
+                                if (val) {
+                                    dadosPDF.push({
+                                        descricao: cells[0].innerText.trim(),
+                                        valor: val
+                                    });
+                                }
+                            }
+                        });
+
+                        if (dadosPDF.length === 0) {
+                            alert('Resultados não encontrados. Tente calcular novamente.');
+                            return;
+                        }
+
                         gerarPDF('rescisao', dadosPDF);
                     } catch (err) {
                         console.error('Erro ao gerar PDF da rescisão:', err);

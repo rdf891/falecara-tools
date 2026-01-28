@@ -213,25 +213,25 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
 
         newBtnPdf.addEventListener('click', () => {
             try {
-                const dadosPDF = [
-                    { descricao: 'Salário Bruto', valor: formatarMoeda(salario) },
-                    { descricao: 'Previsão de Férias (+1/3)', valor: formatarMoeda(previsaoFerias) },
-                    { descricao: 'Previsão de 13º Salário', valor: formatarMoeda(previsao13) },
-                    { descricao: 'FGTS (8%)', valor: formatarMoeda(fgts) }
-                ];
+                const dadosPDF = [];
+                // Captura linhas da tabela de Resultado Empresa
+                const rows = document.querySelectorAll('#resultado-tabela-empresa tr');
 
-                if (regime === 'lucro') {
-                    // Recalcula ou usa variáveis se disponíveis. 
-                    // Nota: inssPatronal e sistemaS_SAT não estavam definidas no escopo principal.
-                    // Vamos usar os valores calculados anteriormente se possível, ou recalcular simples para exibição.
-                    const previdenciaPatronal = salario * 0.20;
-                    const rat = salario * 0.03;
-                    const terceiros = salario * 0.058;
-                    dadosPDF.push({ descricao: 'INSS Patronal (20%)', valor: formatarMoeda(previdenciaPatronal) });
-                    dadosPDF.push({ descricao: 'RAT + Terceiros (8.8%)', valor: formatarMoeda(rat + terceiros) });
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length === 2) {
+                        dadosPDF.push({
+                            descricao: cells[0].innerText.trim(),
+                            valor: cells[1].innerText.trim()
+                        });
+                    }
+                });
+
+                if (dadosPDF.length === 0) {
+                    alert('Realize o cálculo antes de gerar o PDF.');
+                    return;
                 }
 
-                dadosPDF.push({ descricao: 'CUSTO TOTAL EMPRESA', valor: formatarMoeda(custoTotalEmpresa) });
                 gerarPDF('custo', dadosPDF);
             } catch (err) {
                 console.error('Erro ao gerar PDF:', err);

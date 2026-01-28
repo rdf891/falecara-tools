@@ -226,15 +226,33 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
         btnPdf.parentNode.replaceChild(newBtnPdf, btnPdf);
 
         newBtnPdf.addEventListener('click', () => {
-            const dadosPDF = [
-                { descricao: 'Remuneração Bruta Total', valor: formatarMoeda(remuneracaoBrutaTotal) },
-                { descricao: 'Salário Família', valor: formatarMoeda(salarioFamilia) },
-                { descricao: 'Desconto INSS', valor: `(${formatarMoeda(descontoINSS)})` },
-                { descricao: 'Desconto IRRF', valor: `(${formatarMoeda(descontoIRRF)})` },
-                { descricao: 'Desconto Vale-Transporte', valor: `(${formatarMoeda(descontoVT)})` },
-                { descricao: 'SALÁRIO LÍQUIDO', valor: formatarMoeda(salarioLiquido) }
-            ];
-            gerarPDF('salario', dadosPDF);
+            try {
+                const dadosPDF = [];
+                // Captura linhas da tabela de Resultado
+                const rows = document.querySelectorAll('#resultado-tabela tr');
+
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length === 2) {
+                        const descricao = cells[0].innerText.trim();
+                        const valor = cells[1].innerText.trim();
+                        // Ignora linhas de headers intermediários se houver (validação extra)
+                        if (descricao && valor) {
+                            dadosPDF.push({ descricao, valor });
+                        }
+                    }
+                });
+
+                if (dadosPDF.length === 0) {
+                    alert('Realize o cálculo antes de gerar o PDF.');
+                    return;
+                }
+
+                gerarPDF('salario', dadosPDF);
+            } catch (err) {
+                console.error('Erro ao gerar PDF:', err);
+                alert('Erro ao gerar o PDF. Veja o console para mais detalhes.');
+            }
         });
     }
 });
