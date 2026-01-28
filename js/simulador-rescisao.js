@@ -473,22 +473,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('memoria-calculo-wrapper').style.display = 'block';
             document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
 
-            // Dados para PDF
-            const dadosPDF = [
-                { descricao: 'Saldo de Salário', valor: formatarMoeda(saldoSalario) },
-                { descricao: '13º Salário Proporcional', valor: formatarMoeda(decimoTerceiroProp) },
-                { descricao: 'Férias Vencidas + 1/3', valor: formatarMoeda(feriasVencidasTotal) },
-                { descricao: 'Férias Proporcionais + 1/3', valor: formatarMoeda(feriasPropTotal) },
-            ];
-
-            if (avisoPrevioIndenizadoValor > 0) dadosPDF.push({ descricao: 'Aviso Prévio Indenizado', valor: formatarMoeda(avisoPrevioIndenizadoValor) });
-            if (multaFgtsValor > 0) dadosPDF.push({ descricao: 'Multa 40% FGTS', valor: formatarMoeda(multaFgtsValor) });
-
-            // Adiciona totais (pode refinar conforme necessidade)
-            dadosPDF.push({ descricao: 'TOTAL BRUTO', valor: formatarMoeda(totalBruto) });
-            dadosPDF.push({ descricao: 'TOTAL DESCONTOS', valor: `(${formatarMoeda(totalDescontos)})` });
-            dadosPDF.push({ descricao: 'TOTAL LÍQUIDO A RECEBER', valor: formatarMoeda(totalLiquido) });
-
             // Configura botão PDF
             const btnPdf = document.getElementById('btnPdf');
             if (btnPdf) {
