@@ -498,18 +498,33 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+// Função de inicialização do botão de compartilhamento
+function initShareButton() {
     const btnShare = document.getElementById('btnShare');
-    if (btnShare) {
-        btnShare.addEventListener('click', () => {
-            const elValor = document.querySelector('.rescisao-final .valor');
-            if (!elValor) {
-                alert('Realize o cálculo antes de compartilhar!');
-                return;
-            }
-            const valor = elValor.innerText; // Pega o total líquido
-            const texto = `Simulei minha Rescisão no FaleCara e o valor estimado foi de *${valor}*. Calcule a sua também:`;
-            compartilharZap(texto);
-        });
-    }
-});
+    if (!btnShare) return;
+
+    // Remove listeners antigos para evitar duplicação (clone node trick)
+    const newBtn = btnShare.cloneNode(true);
+    btnShare.parentNode.replaceChild(newBtn, btnShare);
+
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const elValor = document.querySelector('.rescisao-final .valor');
+
+        if (!elValor) {
+            alert('Realize o cálculo antes de compartilhar!');
+            return;
+        }
+
+        const valor = elValor.innerText;
+        const texto = `Simulei minha Rescisão no FaleCara e o valor estimado foi de *${valor}*. Calcule a sua também:`;
+        compartilharZap(texto);
+    });
+}
+
+// Garante que rode após o DOM estar pronto
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShareButton);
+} else {
+    initShareButton();
+}

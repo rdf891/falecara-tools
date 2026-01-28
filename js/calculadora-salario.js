@@ -220,18 +220,29 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
     document.getElementById('resultado').style.display = 'block';
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+// Função de inicialização do botão de compartilhamento
+function initShareButton() {
     const btnShare = document.getElementById('btnShare');
-    if (btnShare) {
-        btnShare.addEventListener('click', () => {
-            const elValor = document.querySelector('.salario-liquido-final .valor-positivo');
-            if (!elValor) {
-                alert('Realize o cálculo antes de compartilhar!');
-                return;
-            }
-            const valor = elValor.innerText;
-            const texto = `Calculei meu Salário Líquido 2026 no FaleCara. Resultado: *${valor}*. Veja o seu:`;
-            compartilharZap(texto);
-        });
-    }
-});
+    if (!btnShare) return;
+
+    const newBtn = btnShare.cloneNode(true);
+    btnShare.parentNode.replaceChild(newBtn, btnShare);
+
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const elValor = document.querySelector('.salario-liquido-final .valor-positivo');
+        if (!elValor) {
+            alert('Realize o cálculo antes de compartilhar!');
+            return;
+        }
+        const valor = elValor.innerText;
+        const texto = `Calculei meu Salário Líquido 2026 no FaleCara. Resultado: *${valor}*. Veja o seu:`;
+        compartilharZap(texto);
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShareButton);
+} else {
+    initShareButton();
+}

@@ -36,14 +36,17 @@ function compartilharZap(mensagemBase) {
     const urlSite = 'https://rdf891.github.io/falecara-tools/';
     const textoFinal = `${mensagemBase} ${urlSite}`;
 
-    // Tenta usar o compartilhamento nativo do celular (Android/iOS)
-    if (navigator.share) {
+    // Detecção simples de dispositivo móvel
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+    if (isMobile && navigator.share) {
+        // Nativo apenas no mobile
         navigator.share({
             title: 'FaleCara Tools',
             text: textoFinal
-        }).catch(console.error);
+        }).catch(err => console.log('Erro ao compartilhar ou cancelado:', err));
     } else {
-        // Fallback para WhatsApp Web
+        // Desktop ou fallback -> WhatsApp Web
         const linkZap = `https://api.whatsapp.com/send?text=${encodeURIComponent(textoFinal)}`;
         window.open(linkZap, '_blank');
     }

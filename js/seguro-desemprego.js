@@ -71,22 +71,33 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
     document.getElementById('resultado').style.display = 'block';
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+// Função de inicialização do botão de compartilhamento
+function initShareButton() {
     const btnShare = document.getElementById('btnShare');
-    if (btnShare) {
-        btnShare.addEventListener('click', () => {
-            const elParcelas = document.querySelector('#resultado-titulo');
-            const elValor = document.querySelector('.valor-destaque');
+    if (!btnShare) return;
 
-            if (!elValor) {
-                alert('Realize o cálculo antes de compartilhar!');
-                return;
-            }
+    const newBtn = btnShare.cloneNode(true);
+    btnShare.parentNode.replaceChild(newBtn, btnShare);
 
-            const parcelasText = elParcelas.innerText.replace('Você tem direito a ', '').replace('!', '');
-            const valor = elValor.innerText;
-            const texto = `Simulação de Seguro-Desemprego: Tenho direito a *${parcelasText}* de aprox. *${valor}*. Confira as regras:`;
-            compartilharZap(texto);
-        });
-    }
-});
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const elParcelas = document.querySelector('#resultado-titulo');
+        const elValor = document.querySelector('.valor-destaque');
+
+        if (!elValor) {
+            alert('Realize o cálculo antes de compartilhar!');
+            return;
+        }
+
+        const parcelasText = elParcelas.innerText.replace('Você tem direito a ', '').replace('!', '');
+        const valor = elValor.innerText;
+        const texto = `Simulação de Seguro-Desemprego: Tenho direito a *${parcelasText}* de aprox. *${valor}*. Confira as regras:`;
+        compartilharZap(texto);
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShareButton);
+} else {
+    initShareButton();
+}

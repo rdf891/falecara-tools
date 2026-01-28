@@ -206,18 +206,29 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
     document.getElementById('resultado').style.display = 'block';
 });
 
-document.addEventListener('DOMContentLoaded', () => {
+// Função de inicialização do botão de compartilhamento
+function initShareButton() {
     const btnShare = document.getElementById('btnShare');
-    if (btnShare) {
-        btnShare.addEventListener('click', () => {
-            const elTotal = document.querySelector('.custo-total td:nth-child(2)');
-            if (!elTotal) {
-                alert('Realize o cálculo antes de compartilhar!');
-                return;
-            }
-            const total = elTotal.innerText;
-            const texto = `Custo total do funcionário simulado: *${total}*. Faça o cálculo completo:`;
-            compartilharZap(texto);
-        });
-    }
-});
+    if (!btnShare) return;
+
+    const newBtn = btnShare.cloneNode(true);
+    btnShare.parentNode.replaceChild(newBtn, btnShare);
+
+    newBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const elTotal = document.querySelector('.custo-total td:nth-child(2)');
+        if (!elTotal) {
+            alert('Realize o cálculo antes de compartilhar!');
+            return;
+        }
+        const total = elTotal.innerText;
+        const texto = `Custo total do funcionário simulado: *${total}*. Faça o cálculo completo:`;
+        compartilharZap(texto);
+    });
+}
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initShareButton);
+} else {
+    initShareButton();
+}
