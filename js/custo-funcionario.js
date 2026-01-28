@@ -204,6 +204,30 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
 
     document.getElementById('resultado-tabela-empresa').innerHTML = htmlEmpresa;
     document.getElementById('resultado').style.display = 'block';
+
+    // Configura PDF
+    const btnPdf = document.getElementById('btnPdf');
+    if (btnPdf) {
+        const newBtnPdf = btnPdf.cloneNode(true);
+        btnPdf.parentNode.replaceChild(newBtnPdf, btnPdf);
+
+        newBtnPdf.addEventListener('click', () => {
+            const dadosPDF = [
+                { descricao: 'Salário Bruto', valor: formatarMoeda(salario) },
+                { descricao: 'Previsão de Férias (+1/3)', valor: formatarMoeda(previsaoFerias) },
+                { descricao: 'Previsão de 13º Salário', valor: formatarMoeda(previsao13) },
+                { descricao: 'FGTS (8%)', valor: formatarMoeda(fgts) }
+            ];
+
+            if (regimeTributario === 'lucro_presumido') {
+                dadosPDF.push({ descricao: 'INSS Patronal (20%)', valor: formatarMoeda(inssPatronal) });
+                dadosPDF.push({ descricao: 'Sistema S + SAT', valor: formatarMoeda(sistemaS_SAT) });
+            }
+
+            dadosPDF.push({ descricao: 'CUSTO TOTAL EMPRESA', valor: formatarMoeda(custoTotalEmpresa) });
+            gerarPDF('custo', dadosPDF);
+        });
+    }
 });
 
 // Função de inicialização do botão de compartilhamento

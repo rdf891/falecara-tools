@@ -15,6 +15,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulador de Rescisão - FaleCara</title>
     <link rel="manifest" href="manifest.json">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.68/vfs_fonts.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/style.css">
     <!-- Legacy Scripts for PDF -->
@@ -191,26 +193,17 @@
                     <button class="btn-calcular" id="calcularBtn">CALCULAR RESCISÃO 2026</button>
                 </div>
 
-                <div id="printable-area" class="bg-white">
-                    <div class="pdf-header text-center p-20 border-b-2 border-ccc hidden">
-                        <h2 class="m-0 border-none color-primary">Simulação de Verbas Rescisórias (2026)</h2>
+                <div class="resultado-rescisao" id="resultado" style="display: none;">
+                    <table>
+                        <tbody id="resultado-tabela"></tbody>
+                    </table>
+                    <div class="memoria-calculo-wrapper" id="memoria-calculo-wrapper">
+                        <div class="memoria-calculo" id="memoria-calculo"></div>
                     </div>
-                    <div class="resultado-rescisao hidden" id="resultado">
-                        <table>
-                            <tbody id="resultado-tabela"></tbody>
-                        </table>
-                        <div class="memoria-calculo-wrapper hidden" id="memoria-calculo-wrapper">
-                            <div class="memoria-calculo" id="memoria-calculo"></div>
-                        </div>
-                        <button class="btn-whatsapp" id="btnShare"><i class="fab fa-whatsapp"></i> Compartilhar
-                            Resultado</button>
-                    </div>
-                    <div class="pdf-footer text-center p-15 border-t-1 border-eee text-sm text-gray-500 hidden">
-                        <p class="m-0">Gerado por Fale Cara - falecara.blogspot.com</p>
-                    </div>
+                    <button class="btn-whatsapp" id="btnShare"><i class="fab fa-whatsapp"></i> Compartilhar
+                        Resultado</button>
+                    <button class="btn-pdf" id="btnPdf"><i class="fas fa-file-pdf"></i> Baixar Relatório PDF</button>
                 </div>
-
-                <button class="btn-pdf" id="btn-pdf">Baixar Simulação em PDF</button>
             </div>
         </div>
     </main>
@@ -221,6 +214,7 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script src="js/pdf-generator.js"></script>
     <script src="js/simulador-rescisao.js"></script>
 </body>
 

@@ -69,6 +69,21 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
         resultadoTexto.innerHTML = 'Com base no tempo de trabalho informado, você não atinge a carência mínima de meses para esta solicitação.';
     }
     document.getElementById('resultado').style.display = 'block';
+
+    // Configura PDF
+    const btnPdf = document.getElementById('btnPdf');
+    if (btnPdf) {
+        const newBtnPdf = btnPdf.cloneNode(true);
+        btnPdf.parentNode.replaceChild(newBtnPdf, btnPdf);
+
+        newBtnPdf.addEventListener('click', () => {
+            const dadosPDF = {
+                parcelas: numeroParcelas > 0 ? `${numeroParcelas} parcelas` : 'N/A',
+                valor: numeroParcelas > 0 ? mediaSalarial <= 3633 ? formatarMoeda(valorParcela) : 'R$ 2.470,60 (Teto)' : 'N/A'
+            };
+            gerarPDF('seguro', dadosPDF);
+        });
+    }
 });
 
 // Função de inicialização do botão de compartilhamento

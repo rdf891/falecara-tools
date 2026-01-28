@@ -471,29 +471,35 @@ document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('memoria-calculo').innerHTML = memoria;
             document.getElementById('resultado').style.display = 'block';
             document.getElementById('memoria-calculo-wrapper').style.display = 'block';
-            document.getElementById('btn-pdf').style.display = 'block';
             document.getElementById('resultado').scrollIntoView({ behavior: 'smooth' });
-        });
-    }
 
-    const btnPdf = document.getElementById('btn-pdf');
-    if (btnPdf) {
-        btnPdf.addEventListener('click', () => {
-            const { jsPDF } = window.jspdf;
-            const area = document.getElementById('printable-area');
-            area.querySelector('.pdf-header').style.display = 'block';
-            area.querySelector('.pdf-footer').style.display = 'block';
+            // Dados para PDF
+            const dadosPDF = [
+                { descricao: 'Saldo de Salário', valor: formatarMoeda(saldoSalario) },
+                { descricao: '13º Salário Proporcional', valor: formatarMoeda(decimoTerceiroProp) },
+                { descricao: 'Férias Vencidas + 1/3', valor: formatarMoeda(feriasVencidasTotal) },
+                { descricao: 'Férias Proporcionais + 1/3', valor: formatarMoeda(feriasPropTotal) },
+            ];
 
-            html2canvas(area, { scale: 2 }).then(canvas => {
-                area.querySelector('.pdf-header').style.display = 'none';
-                area.querySelector('.pdf-footer').style.display = 'none';
-                const imgData = canvas.toDataURL('image/png');
-                const pdf = new jsPDF({ orientation: 'p', unit: 'mm', format: 'a4' });
-                const width = pdf.internal.pageSize.getWidth();
-                const height = (canvas.height * width) / canvas.width;
-                pdf.addImage(imgData, 'PNG', 0, 0, width, height);
-                pdf.save('simulacao-rescisao-2026.pdf');
-            });
+            if (avisoPrevioIndenizadoValor > 0) dadosPDF.push({ descricao: 'Aviso Prévio Indenizado', valor: formatarMoeda(avisoPrevioIndenizadoValor) });
+            if (multaFgtsValor > 0) dadosPDF.push({ descricao: 'Multa 40% FGTS', valor: formatarMoeda(multaFgtsValor) });
+
+            // Adiciona totais (pode refinar conforme necessidade)
+            dadosPDF.push({ descricao: 'TOTAL BRUTO', valor: formatarMoeda(totalBruto) });
+            dadosPDF.push({ descricao: 'TOTAL DESCONTOS', valor: `(${formatarMoeda(totalDescontos)})` });
+            dadosPDF.push({ descricao: 'TOTAL LÍQUIDO A RECEBER', valor: formatarMoeda(totalLiquido) });
+
+            // Configura botão PDF
+            const btnPdf = document.getElementById('btnPdf');
+            if (btnPdf) {
+                // Remove listeners antigos
+                const newBtnPdf = btnPdf.cloneNode(true);
+                btnPdf.parentNode.replaceChild(newBtnPdf, btnPdf);
+
+                newBtnPdf.addEventListener('click', () => {
+                    gerarPDF('rescisao', dadosPDF);
+                });
+            }
         });
     }
 });

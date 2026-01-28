@@ -218,6 +218,25 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
         <small>Cálculos baseados nas regras vigentes em Janeiro de 2026.</small>
     `;
     document.getElementById('resultado').style.display = 'block';
+
+    // Configura PDF
+    const btnPdf = document.getElementById('btnPdf');
+    if (btnPdf) {
+        const newBtnPdf = btnPdf.cloneNode(true);
+        btnPdf.parentNode.replaceChild(newBtnPdf, btnPdf);
+
+        newBtnPdf.addEventListener('click', () => {
+            const dadosPDF = [
+                { descricao: 'Remuneração Bruta Total', valor: formatarMoeda(remuneracaoBrutaTotal) },
+                { descricao: 'Salário Família', valor: formatarMoeda(salarioFamilia) },
+                { descricao: 'Desconto INSS', valor: `(${formatarMoeda(descontoINSS)})` },
+                { descricao: 'Desconto IRRF', valor: `(${formatarMoeda(descontoIRRF)})` },
+                { descricao: 'Desconto Vale-Transporte', valor: `(${formatarMoeda(descontoVT)})` },
+                { descricao: 'SALÁRIO LÍQUIDO', valor: formatarMoeda(salarioLiquido) }
+            ];
+            gerarPDF('salario', dadosPDF);
+        });
+    }
 });
 
 // Função de inicialização do botão de compartilhamento
