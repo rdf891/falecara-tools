@@ -890,3 +890,26 @@ footer a:hover {
 .bg-white {
     background-color: white;
 }
+
+/* Botão WhatsApp */
+.btn-whatsapp {
+    background-color: #25D366;
+    color: white;
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-whatsapp:hover {
+    background-color: #128C7E;
+}

@@ -31,3 +31,20 @@ if ('serviceWorker' in navigator) {
 }
 
 console.log('FaleCara Tools Loaded');
+
+function compartilharZap(mensagemBase) {
+    const urlSite = 'https://rdf891.github.io/falecara-tools/';
+    const textoFinal = `${mensagemBase} ${urlSite}`;
+
+    // Tenta usar o compartilhamento nativo do celular (Android/iOS)
+    if (navigator.share) {
+        navigator.share({
+            title: 'FaleCara Tools',
+            text: textoFinal
+        }).catch(console.error);
+    } else {
+        // Fallback para WhatsApp Web
+        const linkZap = `https://api.whatsapp.com/send?text=${encodeURIComponent(textoFinal)}`;
+        window.open(linkZap, '_blank');
+    }
+}

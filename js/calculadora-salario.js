@@ -219,3 +219,19 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
     `;
     document.getElementById('resultado').style.display = 'block';
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnShare = document.getElementById('btnShare');
+    if (btnShare) {
+        btnShare.addEventListener('click', () => {
+            const elValor = document.querySelector('.salario-liquido-final .valor-positivo');
+            if (!elValor) {
+                alert('Realize o cálculo antes de compartilhar!');
+                return;
+            }
+            const valor = elValor.innerText;
+            const texto = `Calculei meu Salário Líquido 2026 no FaleCara. Resultado: *${valor}*. Veja o seu:`;
+            compartilharZap(texto);
+        });
+    }
+});

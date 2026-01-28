@@ -205,3 +205,19 @@ document.getElementById('calcularBtn').addEventListener('click', () => {
     document.getElementById('resultado-tabela-empresa').innerHTML = htmlEmpresa;
     document.getElementById('resultado').style.display = 'block';
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnShare = document.getElementById('btnShare');
+    if (btnShare) {
+        btnShare.addEventListener('click', () => {
+            const elTotal = document.querySelector('.custo-total td:nth-child(2)');
+            if (!elTotal) {
+                alert('Realize o cálculo antes de compartilhar!');
+                return;
+            }
+            const total = elTotal.innerText;
+            const texto = `Custo total do funcionário simulado: *${total}*. Faça o cálculo completo:`;
+            compartilharZap(texto);
+        });
+    }
+});

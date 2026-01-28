@@ -497,3 +497,19 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const btnShare = document.getElementById('btnShare');
+    if (btnShare) {
+        btnShare.addEventListener('click', () => {
+            const elValor = document.querySelector('.rescisao-final .valor');
+            if (!elValor) {
+                alert('Realize o cálculo antes de compartilhar!');
+                return;
+            }
+            const valor = elValor.innerText; // Pega o total líquido
+            const texto = `Simulei minha Rescisão no FaleCara e o valor estimado foi de *${valor}*. Calcule a sua também:`;
+            compartilharZap(texto);
+        });
+    }
+});
