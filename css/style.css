@@ -994,3 +994,89 @@ footer a:hover {
 .btn-pdf:hover {
     background-color: #c82333;
 }
+/* --- BLOG PROMO SECTION --- */
+.blog-promo-container {
+    margin-top: 40px;
+    background: linear-gradient(135deg, var(--primary-color), #2c3e50);
+    border-radius: 10px;
+    padding: 30px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    color: white;
+}
+
+.blog-promo-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap; /* Responsive wrap */
+}
+
+.blog-icon {
+    font-size: 3em;
+    color: var(--secondary-color);
+    background: rgba(255,255,255,0.1);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.blog-text {
+    flex: 1;
+    min-width: 250px;
+}
+
+.blog-text h3 {
+    margin: 0 0 10px 0;
+    color: white;
+    font-size: 1.5em;
+}
+
+.blog-text p {
+    margin: 0;
+    font-size: 1.1em;
+    opacity: 0.9;
+    line-height: 1.5;
+}
+
+.btn-blog-action {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    transition: transform 0.2s, background-color 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+}
+
+.btn-blog-action:hover {
+    background-color: #248a7d;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* Mobile Responsiveness for Blog Promo */
+@media (max-width: 600px) {
+    .blog-promo-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .blog-text h3 {
+        font-size: 1.3em;
+    }
+    
+    .btn-blog-action {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
